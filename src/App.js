@@ -2,6 +2,7 @@ import React from "react";
 import Directory from "./components/directory/directory.component";
 
 const App = () => {
+  //comment
   const catagories = [
     {
       id: 1,
