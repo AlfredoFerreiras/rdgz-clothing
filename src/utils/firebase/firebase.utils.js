@@ -21,13 +21,12 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
-console.log(firebaseApp);
 
 const googleProvider = new GoogleAuthProvider();
 
 googleProvider.setCustomParameters({ prompt: "select_account" });
 
-export const auth = getAuth();
+export const auth = getAuth(firebaseApp);
 
 export const singInWithGooglePopUp = () =>
   signInWithPopup(auth, googleProvider);

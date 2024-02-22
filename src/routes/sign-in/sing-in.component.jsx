@@ -4,6 +4,7 @@ import {
 } from "../../utils/firebase/firebase.utils";
 
 import SignUpForm from "../../components/sign-up-form/sign-up-form.component";
+import SignInForm from "../../components/sign-in-form/sign-in-form.component";
 
 const SignIn = () => {
   const logGoogleUser = async () => {
@@ -15,7 +16,8 @@ const SignIn = () => {
 
   return (
     <div>
-      <h1>Sign In</h1>
+      <SignInForm />
+
       <button onClick={logGoogleUser}>Sign In With Google Pop Up</button>
       <SignUpForm />
     </div>
