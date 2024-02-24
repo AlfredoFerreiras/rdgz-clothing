@@ -1,8 +1,12 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import { auth } from "../../utils/firebase/firebase.utils";
+import {
+  createUserDocumentFromAuth,
+  singInWithGooglePopUp,
+  signInWithEmailAndPasswordUser,
+} from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
+import "./sign-in-form.styles.scss";
 
 const defaultFormFields = {
   email: "",
@@ -18,19 +22,32 @@ const SignInForm = () => {
     setFormFields(defaultFormFields);
   };
 
-  const handleLogin = (event) => {
+  const signInWithGoogle = async () => {
+    const { user } = await singInWithGooglePopUp();
+    await createUserDocumentFromAuth(user);
+  };
+
+  const handleLogin = async (event) => {
     event.preventDefault();
 
     try {
-      signInWithEmailAndPassword(auth, email, password).then(
-        (userCredentials) => {
-          const userCre = userCredentials.user;
-          console.log(userCre);
-        }
-      );
+      const response = await signInWithEmailAndPasswordUser(email, password);
+
+      console.log(response);
+
       resetFormFields();
     } catch (error) {
-      console.log(error.code);
+      switch (error.code) {
+        case "auth/wrong-password":
+          alert("Incorrect Password");
+          break;
+        case "auth/user-not-found":
+          alert("No user associated with this email");
+          break;
+        default:
+          console.log(error);
+      }
+      console.log(error);
     }
   };
 
@@ -40,8 +57,8 @@ const SignInForm = () => {
   };
 
   return (
-    <div>
-      <h2>Have an account?</h2>
+    <div className="sign-in-container">
+      <h2>Already have an account?</h2>
       <span>Sign In with your email and password</span>
       <form onSubmit={handleLogin}>
         <FormInput
@@ -60,10 +77,17 @@ const SignInForm = () => {
           name="password"
           value={password}
         />
-
-        <Button buttonType="inverted" type="submit">
-          Sign In
-        </Button>
+        <div className="buttons-container">
+          <Button type="submit">Sign In</Button>
+          <div className="button-container-google">
+            <Button
+              type="button"
+              buttonType="google"
+              onClick={signInWithGoogle}>
+              Sign In with Google
+            </Button>
+          </div>
+        </div>
       </form>
     </div>
   );
