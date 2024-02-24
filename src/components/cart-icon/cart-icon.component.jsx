@@ -13,8 +13,6 @@ const CartIcon = () => {
   //   .map((cartItem) => cartItem.quantity)
   //   .reduce((acc, curr) => acc + curr);
 
-  console.log(cartCount);
-
   const toggleIsCartOpen = () => setIsCartOpen(!isCartOpen);
   return (
     <div className="cart-icon-container" onClick={toggleIsCartOpen}>
