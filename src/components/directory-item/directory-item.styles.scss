@@ -66,31 +66,3 @@
     }
   }
 }
-
-@media (max-width: 768px) {
-  .directory-item-container {
-    min-width: 100%; // Ensures each item takes full width of the viewport
-    margin: 0 0 15px; // Adjusts margin for consistent spacing around items
-    height: auto; // Adjusts height dynamically based on content
-
-    &:first-child,
-    &:last-child {
-      margin: 0 0 15px; // Simplifies margin for the first and last item
-    }
-
-    .background-image {
-      // No changes here; adjustments not necessary for mobile responsiveness
-    }
-
-    .body {
-      padding: 0 10px; // Adjusts padding to better fit smaller screens
-      // Potential adjustment to font sizes if necessary for readability:
-      h2 {
-        font-size: 20px; // Slightly smaller to fit smaller screens better
-      }
-      p {
-        font-size: 14px; // Adjusted for better readability on smaller screens
-      }
-    }
-  }
-}
