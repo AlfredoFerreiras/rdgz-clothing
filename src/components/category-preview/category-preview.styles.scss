@@ -1,15 +1,20 @@
 .category-preview-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 30px;
+  margin-bottom: 20px; // Adjusted margin for smaller screens
+
   .title {
-    font-size: 28px;
-    margin-bottom: 25px;
+    font-size: 24px; // Reduced font size for smaller screens
+    margin-bottom: 20px; // Adjusted margin for smaller screens
     cursor: pointer;
   }
+
   .preview {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    column-gap: 20px;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(120px, 1fr)
+    ); // Adjusted grid for smaller screens
+    gap: 15px; // Adjusted gap for smaller screens
   }
 }

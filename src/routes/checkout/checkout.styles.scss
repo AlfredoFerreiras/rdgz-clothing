@@ -1,27 +1,46 @@
 .checkout-container {
-  width: 55%;
+  width: 90%; /* Adjusted width for smaller screens */
   min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 50px auto 0;
-  .checkout-header {
-    width: 100%;
-    padding: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid darkgrey;
-    .header-block {
-      text-transform: capitalize;
-      width: 23%;
-      &:last-child {
-        width: 8%;
-      }
+  margin: 20px auto 0; /* Reduced margin for smaller screens */
+}
+
+.checkout-header {
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  flex-wrap: wrap; /* Allow header items to wrap */
+  justify-content: space-between;
+  border-bottom: 1px solid darkgrey;
+}
+
+.header-block {
+  text-transform: capitalize;
+  width: 100%; /* Full width for header blocks on smaller screens */
+  margin-bottom: 5px; /* Added margin between header blocks */
+}
+
+.total {
+  margin-top: 20px; /* Reduced margin for smaller screens */
+  font-size: 24px; /* Reduced font size for smaller screens */
+}
+
+@media only screen and (min-width: 600px) {
+  .checkout-container {
+    width: 55%; /* Reset width for larger screens */
+    margin: 50px auto 0; /* Reset margin for larger screens */
+  }
+
+  .header-block {
+    width: 23%; /* Reset width for larger screens */
+    &:last-child {
+      width: 8%; /* Reset width for larger screens */
     }
   }
+
   .total {
-    margin-top: 30px;
-    margin-left: auto;
-    font-size: 36px;
+    font-size: 36px; /* Reset font size for larger screens */
   }
 }

@@ -43,3 +43,27 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .product-card-container {
+    height: auto; // Makes the height adjust based on content, better for varying screen sizes
+    padding: 0 10px; // Adds padding to avoid content touching the screen edges
+
+    img {
+      height: auto; // Adjusts image height to maintain aspect ratio
+      margin-bottom: 10px; // Increases margin to separate from button
+    }
+    button {
+      top: auto; // Adjusts button position to sit at the bottom of the card
+      bottom: 10px; // Adds space from the bottom edge
+      width: 100%; // Makes button full width for easier tapping on touch devices
+    }
+    .footer {
+      font-size: 16px; // Adjusts font size for readability on smaller screens
+      .name,
+      .price {
+        margin-bottom: 15px; // Adjusts spacing to better fit smaller screens
+      }
+    }
+  }
+}

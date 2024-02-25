@@ -44,3 +44,17 @@ $main-color: black;
     }
   }
 }
+@media (max-width: 768px) {
+  .group {
+    margin: 25px 0; // Reduce margin for smaller screens
+
+    .form-input {
+      font-size: 16px; // Adjust font size for better readability on smaller screens
+      padding: 8px 8px 8px 5px; // Adjust padding to fit smaller screens
+    }
+
+    .form-input-label {
+      font-size: 14px; // Reduce font size to match the input field's adjusted font size
+    }
+  }
+}

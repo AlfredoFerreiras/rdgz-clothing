@@ -7,3 +7,10 @@
     margin: 10px 0;
   }
 }
+
+@media (max-width: 768px) {
+  .sign-up-container {
+    width: 100%; // Use the full viewport width
+    padding: 0 20px; // Add some padding to prevent content from touching the screen edges
+  }
+}

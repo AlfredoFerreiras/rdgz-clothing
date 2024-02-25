@@ -1,12 +1,28 @@
 .category-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 20px;
-  row-gap: 50px;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(200px, 1fr)
+  ); /* Adjusted grid for smaller screens */
+  gap: 20px; /* Combined column-gap and row-gap into gap */
+  justify-content: center; /* Center the grid items */
 }
 
 .category-title {
-  font-size: 38px;
-  margin-bottom: 25px;
+  font-size: 28px; /* Reduced font size for smaller screens */
+  margin-bottom: 15px; /* Reduced margin for smaller screens */
   text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .category-container {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(120px, 1fr)
+    ); /* Adjusted grid for even smaller screens */
+  }
+
+  .category-title {
+    font-size: 24px; /* Further reduced font size for very small screens */
+  }
 }

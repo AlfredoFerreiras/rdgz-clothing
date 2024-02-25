@@ -1,6 +1,22 @@
 .auth-container {
   display: flex;
-  justify-content: space-between;
-  width: 900px;
-  margin: 30px auto;
+  flex-direction: column; /* Start with a vertical layout for mobile */
+  justify-content: center;
+  align-items: center; /* Center items horizontally on mobile */
+  width: 100%; /* Use the full width on mobile for a more spacious layout */
+  margin: 20px auto;
+  padding: 20px; /* Add some padding for better spacing on mobile */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+@media only screen and (min-width: 768px) {
+  .auth-container {
+    flex-direction: row; /* Switch to horizontal layout for larger screens */
+    justify-content: space-around; /* Distribute space more evenly around items */
+    align-items: center; /* Keep items centered vertically */
+    width: 90%; /* Adjust width for larger screens */
+    max-width: 900px; /* Set a max-width to prevent the container from becoming too wide */
+    margin: 30px auto; /* Adjust margin for larger screens */
+    padding: 0; /* Reset padding for larger screens if necessary */
+  }
 }
