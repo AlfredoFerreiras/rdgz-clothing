@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  createUserDocumentFromAuth,
   singInWithGooglePopUp,
   signInWithEmailAndPasswordUser,
 } from "../../utils/firebase/firebase.utils";
@@ -30,7 +29,7 @@ const SignInForm = () => {
     event.preventDefault();
 
     try {
-      const { user } = await signInWithEmailAndPasswordUser(email, password);
+      await signInWithEmailAndPasswordUser(email, password);
 
       resetFormFields();
     } catch (error) {
@@ -75,7 +74,9 @@ const SignInForm = () => {
           value={password}
         />
         <div className="buttons-container">
-          <Button type="submit">Sign In</Button>
+          <Button buttonType="inverted" type="submit">
+            Sign In
+          </Button>
           <div className="button-container-google">
             <Button
               type="button"

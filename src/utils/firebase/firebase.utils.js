@@ -20,6 +20,8 @@ import {
   writeBatch,
   query,
   getDocs,
+  orderBy,
+  updateDoc,
 } from "firebase/firestore";
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -83,13 +85,12 @@ export const createUserDocumentFromAuth = async (
 ) => {
   if (!userAuth) return;
 
-  const userDocRef = doc(db, `users`, userAuth.uid);
+  const userDocRef = doc(db, "users", userAuth.uid);
 
-  const userSnapShot = await getDoc(userDocRef);
+  const userSnapshot = await getDoc(userDocRef);
 
-  if (!userSnapShot.exists()) {
+  if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
-
     const createdAt = new Date();
 
     try {
@@ -100,7 +101,7 @@ export const createUserDocumentFromAuth = async (
         ...additionalInformation,
       });
     } catch (error) {
-      console.log("Error creating user", error.message);
+      console.log("error creating the user", error.message);
     }
   }
 
@@ -122,3 +123,72 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = (callback) =>
   onAuthStateChanged(auth, callback);
+
+export const createOrderForUser = async (userAuth, orderData) => {
+  if (!userAuth) return;
+
+  const ordersRef = collection(db, `users/${userAuth.uid}/orders`);
+  const newOrderRef = doc(ordersRef); // Let Firestore generate the ID
+
+  console.log("orderData", orderData);
+
+  try {
+    await setDoc(newOrderRef, {
+      ...orderData,
+      createdAt: new Date(), // Capture the order creation time
+    });
+    console.log("Order created successfully!");
+  } catch (error) {
+    console.error("Error creating order", error.message);
+  }
+};
+
+export const getUserOrders = async (userAuth) => {
+  if (!userAuth) return [];
+
+  const ordersRef = collection(db, `users/${userAuth.uid}/orders`);
+  const q = query(ordersRef, orderBy("createdAt", "desc")); // Assuming you want the newest orders first
+  const querySnapshot = await getDocs(q);
+
+  const orders = querySnapshot.docs.map((docSnapshot) => ({
+    id: docSnapshot.id,
+    ...docSnapshot.data(),
+  }));
+
+  return orders;
+};
+
+// Function to update user profile information
+export const updateUserProfileDocument = async (
+  userAuth,
+  additionalInformation = {}
+) => {
+  if (!userAuth) return;
+
+  const userDocRef = doc(db, `users`, userAuth.uid);
+
+  try {
+    await updateDoc(userDocRef, {
+      ...additionalInformation,
+    });
+    console.log("User document updated successfully");
+  } catch (error) {
+    console.error("Error updating user document", error.message);
+  }
+};
+
+export const fetchUserById = async (userId) => {
+  const userDocRef = doc(db, `users`, userId); // Reference to a specific user document
+  try {
+    const docSnapshot = await getDoc(userDocRef);
+    if (docSnapshot.exists()) {
+      return docSnapshot.data(); // Returns the user data if found
+    } else {
+      console.log("No such user!");
+      return null; // Or handle as needed
+    }
+  } catch (error) {
+    console.error("Error fetching user: ", error);
+    throw error;
+  }
+};
