@@ -47,11 +47,7 @@ const DragShuffleHero = () => {
   }, [dragProgress, dragging]);
 
   if (isMobile) {
-    return (
-      <section className="text-center py-12">
-        <p>Sorry, this feature is not available on mobile devices.</p>
-      </section>
-    );
+    return <section className="text-center py-12"></section>;
   }
 
   return (
