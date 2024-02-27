@@ -20,13 +20,11 @@ const DragShuffleHero = () => {
   useEffect(() => {
     const FIVE_SECONDS = 5000;
 
-    // Automatically shuffle the list ever 5 seconds, so long
-    // as it isn't being dragged
     const intervalRef = setInterval(() => {
       const x = dragProgress.get();
-      if (x === 0) {
-        setOrder((pv) => {
-          const orderCopy = [...pv];
+      if (x === 0 && !dragging) {
+        setOrder((prevOrder) => {
+          const orderCopy = [...prevOrder];
           orderCopy.unshift(orderCopy.pop());
           return orderCopy;
         });
@@ -34,13 +32,13 @@ const DragShuffleHero = () => {
     }, FIVE_SECONDS);
 
     return () => clearInterval(intervalRef);
-  }, []);
+  }, [dragging]);
 
   return (
     <section
       style={{ pointerEvents: dragging ? "none" : undefined }}
-      className="overflow-hidden  px-8 py-24 text-slate-500">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-16 md:grid-cols-2 md:gap-8">
+      className="overflow-hidden px-4 py-12 sm:px-8 sm:py-24 text-slate-500">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-8">
         <div>
           <h1 className="text-5xl font-black leading-[1.25] md:text-7xl">
             You don't know about clothes until you see this
@@ -60,7 +58,7 @@ const DragShuffleHero = () => {
         </div>
         <motion.div
           whileTap={{ scale: 0.985 }}
-          className="relative h-[450px] w-[350px]">
+          className="relative h-auto w-auto sm:h-[450px] sm:w-[350px]">
           <Card
             imgUrl="https://i.ibb.co/4W2DGKm/floral-blouse.png"
             testimonial="I feel like I've learned as much from X as I did completing my masters. It's the first thing I read every morning."
@@ -108,6 +106,7 @@ const Card = ({
   dragging,
 }) => {
   const dragX = useMotionValue(0);
+  const draggableStyles = draggable ? "cursor-grab active:cursor-grabbing" : "";
 
   useMotionValueEvent(dragX, "change", (latest) => {
     // When component first mounts, dragX will be a percentage
@@ -141,7 +140,7 @@ const Card = ({
         x: dragX,
       }}
       animate={{ rotate: rotateZ, x }}
-      drag
+      drag={draggable ? "x" : false}
       dragElastic={0.35}
       dragListener={draggable}
       dragConstraints={{
@@ -155,9 +154,7 @@ const Card = ({
       transition={{
         duration: 0.35,
       }}
-      className={`absolute left-0 top-0 grid h-[450px] w-[350px] select-none place-content-center space-y-6 rounded-2xl border-2 border-slate-700 bg-slate-300/20 p-6 shadow-xl backdrop-blur-md ${
-        draggable ? "cursor-grab active:cursor-grabbing" : ""
-      }`}>
+      className={`absolute left-0 top-0 grid h-auto w-full sm:h-[450px] sm:w-[350px] select-none place-content-center space-y-6 rounded-2xl border-2 border-slate-700 bg-slate-300/20 p-4 sm:p-6 shadow-xl backdrop-blur-md ${draggableStyles}`}>
       <img
         src={imgUrl}
         alt={`Image of ${author}`}
