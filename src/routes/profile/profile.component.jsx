@@ -54,7 +54,7 @@ const Profile = () => {
       </div>
       <div>
         <h3 className="text-xl font-semibold text-gray-800 mb-4">
-          Your Orders
+          Your Past Orders
         </h3>
         {orders.length ? (
           <ul className="space-y-4">

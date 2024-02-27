@@ -1,12 +1,15 @@
 import Directory from "../../components/directory/directory.component";
-import { Outlet } from "react-router-dom";
+import DragShuffleHero from "../../components/hero/DragShuffleHero.component";
+
 const Home = () => {
   //comment
 
   return (
     <div>
+      <div className="py-5">
+        <DragShuffleHero />
+      </div>
       <Directory />
-      <Outlet />
     </div>
   );
 };
