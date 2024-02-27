@@ -32,7 +32,7 @@ const DragShuffleHero = () => {
     }, FIVE_SECONDS);
 
     return () => clearInterval(intervalRef);
-  }, [dragging]);
+  }, [dragProgress, dragging]);
 
   return (
     <section
@@ -106,8 +106,8 @@ const Card = ({
   dragging,
 }) => {
   const dragX = useMotionValue(0);
-  const draggableStyles = draggable ? "cursor-grab active:cursor-grabbing" : "";
 
+  const draggable = position === "front";
   useMotionValueEvent(dragX, "change", (latest) => {
     // When component first mounts, dragX will be a percentage
     // due to us setting the initial X value in the animate prop.
@@ -131,8 +131,6 @@ const Card = ({
     position === "front" ? "-6deg" : position === "middle" ? "0deg" : "6deg";
   const zIndex = position === "front" ? "2" : position === "middle" ? "1" : "0";
 
-  const draggable = position === "front";
-
   return (
     <motion.div
       style={{
@@ -154,10 +152,10 @@ const Card = ({
       transition={{
         duration: 0.35,
       }}
-      className={`absolute left-0 top-0 grid h-auto w-full sm:h-[450px] sm:w-[350px] select-none place-content-center space-y-6 rounded-2xl border-2 border-slate-700 bg-slate-300/20 p-4 sm:p-6 shadow-xl backdrop-blur-md ${draggableStyles}`}>
+      className={`absolute left-0 top-0 grid h-auto w-full sm:h-[450px] sm:w-[350px] select-none place-content-center space-y-6 rounded-2xl border-2 border-slate-700 bg-slate-300/20 p-4 sm:p-6 shadow-xl backdrop-blur-md ${draggable}`}>
       <img
         src={imgUrl}
-        alt={`Image of ${author}`}
+        alt="photo"
         className="pointer-events-none mx-auto h-32 w-32 rounded-full border-2 border-slate-900 bg-slate-400 object-cover"
       />
       <span className="text-center text-lg italic text-slate-950">
