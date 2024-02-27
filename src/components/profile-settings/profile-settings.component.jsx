@@ -2,14 +2,15 @@ import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../context/user.context";
 
 const ProfileSettings = () => {
-  const { currentUser, updateUserProfile } = useContext(UserContext);
+  const { currentUser, updateUserProfile, userData } = useContext(UserContext);
+  console.log(userData);
 
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
 
   useEffect(() => {
     if (currentUser) {
-      setDisplayName(currentUser.displayName || "");
+      setDisplayName(currentUser.displayName || userData.displayName || "");
       setEmail(currentUser.email); // Assuming email is part of the user object
     }
   }, [currentUser]);

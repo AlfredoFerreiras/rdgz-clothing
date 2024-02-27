@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 
 export default function PaymentForm({ onPaymentSuccess }) {
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -12,7 +14,14 @@ export default function PaymentForm({ onPaymentSuccess }) {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
-    onPaymentSuccess(); // Simulate successful payment
+    setIsProcessing(true); // Start processing
+
+    // Simulate a processing delay of 2 seconds
+    setTimeout(() => {
+      setIsProcessing(false); // Stop processing
+      // Simulate successful payment
+    }, 2000);
+    onPaymentSuccess();
   };
 
   // Watching fields to update the card preview dynamically
@@ -100,8 +109,11 @@ export default function PaymentForm({ onPaymentSuccess }) {
         </div>
         <button
           type="submit"
-          className="mt-4 w-full bg-blue-500 text-white p-2 rounded-md">
-          Process Payment
+          disabled={isProcessing}
+          className={`mt-4 w-full ${
+            isProcessing ? "bg-gray-500" : "bg-blue-500"
+          } text-white p-2 rounded-md`}>
+          {isProcessing ? "Processing..." : "Process Payment"}
         </button>
       </form>
     </div>
