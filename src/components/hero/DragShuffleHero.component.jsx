@@ -7,6 +7,18 @@ const DragShuffleHero = () => {
   const dragProgress = useMotionValue(0);
   const [order, setOrder] = useState(["front", "middle", "back"]);
   const [dragging, setDragging] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768); // 768px is a common breakpoint for mobile devices
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Put the conditional logic inside the render output, not around hook calls
 
   const handleDragEnd = () => {
     const x = dragProgress.get();
@@ -33,6 +45,14 @@ const DragShuffleHero = () => {
 
     return () => clearInterval(intervalRef);
   }, [dragProgress, dragging]);
+
+  if (isMobile) {
+    return (
+      <section className="text-center py-12">
+        <p>Sorry, this feature is not available on mobile devices.</p>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -155,7 +175,7 @@ const Card = ({
       className={`absolute left-0 top-0 grid h-auto w-full sm:h-[450px] sm:w-[350px] select-none place-content-center space-y-6 rounded-2xl border-2 border-slate-700 bg-slate-300/20 p-4 sm:p-6 shadow-xl backdrop-blur-md ${draggable}`}>
       <img
         src={imgUrl}
-        alt="photo"
+        alt=" card playing soccer"
         className="pointer-events-none mx-auto h-32 w-32 rounded-full border-2 border-slate-900 bg-slate-400 object-cover"
       />
       <span className="text-center text-lg italic text-slate-950">
